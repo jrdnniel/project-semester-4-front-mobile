@@ -150,7 +150,7 @@ class ChatDetailPage extends StatelessWidget {
                         if (isSentByMe)
                           CircleAvatar(
                             radius: 15,
-                            backgroundImage: AssetImage('assets/images/profile.png'),
+                            backgroundImage: AssetImage('assets/gambar7.jpg'),
                           ),
                       ],
                     ),

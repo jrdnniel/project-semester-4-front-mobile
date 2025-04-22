@@ -6,6 +6,7 @@ class CartItem {
   final double price;
   final String image;
   int quantity;
+  String orderStatus; // Properti baru untuk status pemesanan
 
   CartItem({
     required this.name,
@@ -13,6 +14,7 @@ class CartItem {
     required this.price,
     required this.image,
     this.quantity = 1,
+    this.orderStatus = 'Anak - anak', // Default ke "Sekarang"
   });
 }
 
@@ -43,5 +45,13 @@ class CartProvider with ChangeNotifier {
 
   double get totalPrice {
     return _items.fold(0, (total, item) => total + (item.price * item.quantity));
+  }
+
+  void updateOrderStatus(String name, String newStatus) {
+    int index = _items.indexWhere((item) => item.name == name);
+    if (index != -1) {
+      _items[index].orderStatus = newStatus;
+      notifyListeners();
+    }
   }
 }

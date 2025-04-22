@@ -6,15 +6,15 @@ import 'cart_page.dart'; // Import halaman keranjang
 
 class PharmacyPage extends StatelessWidget {
   final List<Map<String, dynamic>> popularProducts = [
-    {'name': 'Panadol', 'description': '1 pcs', 'price': 15.99, 'image': 'assets/images/panadol.png'},
-    {'name': 'Bodrex Herbal', 'description': '100ml', 'price': 7.99, 'image': 'assets/images/bodrex_herbal.png'},
-    {'name': 'Konidin', 'description': '3 pcs', 'price': 5.99, 'image': 'assets/images/konidin.png'},
+    {'name': 'Panadol', 'description': '1 pcs', 'price': 8000, 'image': 'assets/gambar24.png'},
+    {'name': 'Bodrex Herbal', 'description': '100ml', 'price': 7000, 'image': 'assets/gambar22.png'},
+    {'name': 'Konidin', 'description': '3 pcs', 'price': 5000, 'image': 'assets/gambar23.png'},
   ];
 
   final List<Map<String, dynamic>> saleProducts = [
-    {'name': 'OBH Combi', 'description': '75ml', 'price': 9.99, 'image': 'assets/images/obh_combi.png'},
-    {'name': 'Betadine', 'description': '50ml', 'price': 6.99, 'image': 'assets/images/betadine.png'},
-    {'name': 'Bodrexin', 'description': '75ml', 'price': 7.99, 'image': 'assets/images/bodrexin.png'},
+    {'name': 'OBH Combi', 'description': '75ml', 'price': 9000, 'image': 'assets/gambar21.png'},
+    {'name': 'Betadine', 'description': '50ml', 'price': 6000, 'image': 'assets/gambar22.png'},
+    {'name': 'Bodrexin', 'description': '75ml', 'price': 7000, 'image': 'assets/gambar23.png'},
   ];
 
   PharmacyPage({super.key});
@@ -120,7 +120,7 @@ class PharmacyPage extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: Image.asset(
-                    'assets/images/prescription_image.png',
+                    'assets/gambar20.png',
                     width: 100,
                     height: 100,
                     fit: BoxFit.contain,
@@ -280,7 +280,7 @@ class PharmacyPage extends StatelessWidget {
   }
 }
 
-// Widget untuk kartu produk
+// // Widget untuk kartu produk
 class ProductCard extends StatelessWidget {
   final String name;
   final String description;
@@ -289,7 +289,8 @@ class ProductCard extends StatelessWidget {
   final VoidCallback onAddToCart;
   final VoidCallback onTap;
 
-  const ProductCard({super.key, 
+  const ProductCard({
+    super.key,
     required this.name,
     required this.description,
     required this.price,
@@ -303,7 +304,7 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 120,
+        width: 130, // 
         margin: EdgeInsets.only(right: 16),
         child: Card(
           elevation: 2,
@@ -347,7 +348,7 @@ class ProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '\$${price.toStringAsFixed(2)}',
+                          'Rp.${price.toStringAsFixed(0)}',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -378,7 +379,8 @@ class ProductDetailDialog extends StatelessWidget {
   final double price;
   final String image;
 
-  const ProductDetailDialog({super.key, 
+  const ProductDetailDialog({
+    super.key,
     required this.name,
     required this.description,
     required this.price,
@@ -425,7 +427,7 @@ class ProductDetailDialog extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              '\$${price.toStringAsFixed(2)}',
+              'Rp.${price}',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

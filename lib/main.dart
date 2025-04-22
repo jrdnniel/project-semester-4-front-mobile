@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'menu_utama/main_page.dart';
 import 'pharmacy/cart_provider.dart';
+import 'splash.dart'; // Import SplashPage
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.teal,
         ),
-        home: MainPage(),
+        home: const SplashPage(), // Langsung ke SplashPage
       ),
     );
   }

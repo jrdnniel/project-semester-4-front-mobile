@@ -20,3 +20,40 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/gambar1.png
+    - assets/gambar2.png
+    - assets/gambar3.png
+    - assets/gambar4.png
+    - assets/gambar5.png
+    - assets/gambar6.png
+    - assets/gambar7.jpg
+    - assets/gambar8.png
+    - assets/gambar9.png
+    - assets/gambar10.png
+    - assets/gambar11.png
+    - assets/gambar12.png
+    - assets/gambar13.png
+    - assets/gambar14.png
+    - assets/gambar15.png
+    - assets/gambar16.png
+    - assets/gambar17.png
+    - assets/gambar18.png
+    - assets/gambar19.png
+    - assets/gambar20.png
+    - assets/gambar21.png
+    - assets/gambar22.png
+    - assets/gambar23.png
+    - assets/gambar24.png
+    - assets/gambar25.png
+    - assets/gambar26.png
+    - assets/gambar27.png
+    - assets/gambar28.png
+    - assets/gambar29.png
+    - assets/gambar30.png
+    - assets/gambar31.png
+    - assets/gambar32.jpg
+    - assets/gambar33.jpg
+    - assets/gambar34.jpg
+    - assets/gambar35.jpg
+    

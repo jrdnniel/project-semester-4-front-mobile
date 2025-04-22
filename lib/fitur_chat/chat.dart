@@ -5,38 +5,38 @@ import 'package:doctor/fitur_chat/chat_detail.dart'; // Import halaman chat_deta
 class ChatPage extends StatelessWidget {
   // Data dummy untuk dokter yang aktif
   final List<Map<String, String>> activeDoctors = [
-    {'image': 'assets/images/doctor1.png'},
-    {'image': 'assets/images/doctor2.png'},
-    {'image': 'assets/images/doctor3.png'},
-    {'image': 'assets/images/doctor1.png'},
-    {'image': 'assets/images/doctor2.png'},
+    {'image': 'assets/gambar8.png'},
+    {'image': 'assets/gambar9.png'},
+    {'image': 'assets/gambar10.png'},
+    {'image': 'assets/gambar11.png'},
+    {'image': 'assets/gambar12.png'},
   ];
 
   // Data dummy untuk daftar pesan
   final List<Map<String, dynamic>> messages = [
     {
-      'image': 'assets/images/doctor1.png',
+      'image': 'assets/gambar8.png',
       'name': 'Dr.Upul',
       'message': 'Worem consectetur adipiscing elit.',
       'time': '12:50',
       'unreadCount': 2,
     },
     {
-      'image': 'assets/images/doctor2.png',
+      'image': 'assets/gambar9.png',
       'name': 'Dr.Silva',
       'message': 'Worem consectetur adipiscing elit.',
       'time': '12:50',
       'unreadCount': 0,
     },
     {
-      'image': 'assets/images/doctor3.png',
+      'image': 'assets/gambar10.png',
       'name': 'Dr.Pawani',
       'message': 'Worem consectetur adipiscing elit.',
       'time': '12:50',
       'unreadCount': 0,
     },
     {
-      'image': 'assets/images/doctor1.png',
+      'image': 'assets/gambar11.png',
       'name': 'Dr.Rayan',
       'message': 'Worem consectetur adipiscing elit.',
       'time': '12:50',

@@ -16,7 +16,7 @@ class _FindDoctorPageState extends State<FindDoctorPage> {
     {
       'name': 'Dr. Thomas M. Armbruster',
       'specialization': 'Anesthesiology',
-      'image': 'assets/images/doctor1.png',
+      'image': 'assets/gambar14.png',
       'address': 'Your Doctor, 1327 Colonial AVE, Anaheim, CA 92802',
       'education': 'UCSF Medical Center, University of Hawaii, University of Kansas School of Medicine',
       'certification': 'CA State Medical License, HI State Medical License',
@@ -26,7 +26,7 @@ class _FindDoctorPageState extends State<FindDoctorPage> {
     {
       'name': 'Dr. Cindy Hsu',
       'specialization': 'Anesthesiology',
-      'image': 'assets/images/doctor2.png',
+      'image': 'assets/gambar15.png',
       'address': '123 Health St, Los Angeles, CA 90001',
       'education': 'UCLA Medical School',
       'certification': 'CA State Medical License',
@@ -36,7 +36,7 @@ class _FindDoctorPageState extends State<FindDoctorPage> {
     {
       'name': 'Dr. Gary Alan Goldman',
       'specialization': 'Anesthesiology',
-      'image': 'assets/images/doctor3.png',
+      'image': 'assets/gambar13.png',
       'address': '456 Wellness Ave, San Diego, CA 92101',
       'education': 'UCSD Medical School',
       'certification': 'CA State Medical License',
@@ -46,7 +46,7 @@ class _FindDoctorPageState extends State<FindDoctorPage> {
     {
       'name': 'Dr. Nancy L. Bruder',
       'specialization': 'Anesthesiology',
-      'image': 'assets/images/doctor4.png',
+      'image': 'assets/gambar19.png',
       'address': '789 Care Rd, San Francisco, CA 94101',
       'education': 'Stanford Medical School',
       'certification': 'CA State Medical License',
@@ -56,7 +56,7 @@ class _FindDoctorPageState extends State<FindDoctorPage> {
     {
       'name': 'Dr. Marcus Horic',
       'specialization': 'Cardiology',
-      'image': 'assets/images/doctor1.png',
+      'image': 'assets/gambar16.png',
       'address': '101 Heart St, New York, NY 10001',
       'education': 'NYU Medical School',
       'certification': 'NY State Medical License',
@@ -66,7 +66,7 @@ class _FindDoctorPageState extends State<FindDoctorPage> {
     {
       'name': 'Dr. Maria Elena',
       'specialization': 'Psychology',
-      'image': 'assets/images/doctor2.png',
+      'image': 'assets/gambar17.png',
       'address': '202 Mind Ave, Chicago, IL 60601',
       'education': 'University of Chicago',
       'certification': 'IL State Medical License',
@@ -76,7 +76,7 @@ class _FindDoctorPageState extends State<FindDoctorPage> {
     {
       'name': 'Dr. Stevi Jessi',
       'specialization': 'Orthopedist',
-      'image': 'assets/images/doctor3.png',
+      'image': 'assets/gambar18.png',
       'address': '303 Bone Rd, Miami, FL 33101',
       'education': 'University of Miami',
       'certification': 'FL State Medical License',

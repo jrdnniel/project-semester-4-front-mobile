@@ -15,9 +15,16 @@ class MenuPage extends StatefulWidget {
 
 class _MenuPageState extends State<MenuPage> {
   final List<String> bannerImages = [
-    'assets/images/banner1.png',
-    'assets/images/banner2.png',
-    'assets/images/banner3.png',
+    'assets/gambar3.png',
+    'assets/gambar3.png',
+    'assets/gambar3.png',
+  ];
+
+  // List untuk kalimat banner
+  final List<String> bannerTexts = [
+    'Pertolongan Pertama terhadap Kesehatan Keluarga',
+    'Keluarga sehat hati pun gembira',
+    'Jangan mau sakit',
   ];
 
   final PageController _pageController = PageController();
@@ -90,7 +97,7 @@ class _MenuPageState extends State<MenuPage> {
                             CircleAvatar(
                               radius: 20,
                               backgroundImage: AssetImage(
-                                'assets/images/profile.png',
+                                'assets/gambar7.jpg',
                               ),
                             ),
                             SizedBox(width: 10),
@@ -191,7 +198,6 @@ class _MenuPageState extends State<MenuPage> {
                       icon: Icons.local_pharmacy,
                       label: 'Pharmacy',
                       onTap: () {
-                        // Navigasi ke PharmacyPage
                         Navigator.push(
                           context,
                           PageRouteBuilder(
@@ -318,12 +324,14 @@ class _MenuPageState extends State<MenuPage> {
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: Text(
-                                  'Pertolongan Pertama terhadap Kesehatan Keluarga',
+                                  bannerTexts[index], // Gunakan kalimat dari list
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black87,
                                   ),
+                                  maxLines: 2, // Batasi jumlah baris
+                                  overflow: TextOverflow.ellipsis, // Elipsis jika teks panjang
                                 ),
                               ),
                             ),
@@ -363,7 +371,7 @@ class _MenuPageState extends State<MenuPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     DoctorCard(
-                      image: 'assets/images/doctor1.png',
+                      image: 'assets/gambar4.png',
                       name: 'Dr. Marcus Horic',
                       rating: '4.7',
                       distance: '800M away',
@@ -374,7 +382,7 @@ class _MenuPageState extends State<MenuPage> {
                           context: context,
                           builder:
                               (context) => DoctorDetailDialog(
-                                image: 'assets/images/doctor1.png',
+                                image: 'assets/gambar4.png',
                                 name: 'Dr. Marcus Horic',
                                 rating: '4.7',
                                 specialization: 'Cardiologist',
@@ -384,7 +392,7 @@ class _MenuPageState extends State<MenuPage> {
                       },
                     ),
                     DoctorCard(
-                      image: 'assets/images/doctor2.png',
+                      image: 'assets/gambar5.png',
                       name: 'Dr. Maria Elena',
                       rating: '4.8',
                       distance: '1.5km away',
@@ -395,7 +403,7 @@ class _MenuPageState extends State<MenuPage> {
                           context: context,
                           builder:
                               (context) => DoctorDetailDialog(
-                                image: 'assets/images/doctor2.png',
+                                image: 'assets/gambar5.png',
                                 name: 'Dr. Maria Elena',
                                 rating: '4.8',
                                 specialization: 'Psychologist',
@@ -405,7 +413,7 @@ class _MenuPageState extends State<MenuPage> {
                       },
                     ),
                     DoctorCard(
-                      image: 'assets/images/doctor3.png',
+                      image: 'assets/gambar6.png',
                       name: 'Dr. Stevi Jessi',
                       rating: '4.6',
                       distance: '2km away',
@@ -416,7 +424,7 @@ class _MenuPageState extends State<MenuPage> {
                           context: context,
                           builder:
                               (context) => DoctorDetailDialog(
-                                image: 'assets/images/doctor3.png',
+                                image: 'assets/gambar6.png',
                                 name: 'Dr. Stevi Jessi',
                                 rating: '4.6',
                                 specialization: 'Orthopedist',
@@ -764,7 +772,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  // Navigasi ke FindDoctorPage dengan filter
                   Navigator.pop(context); // Tutup bottom sheet
                   Navigator.push(
                     context,

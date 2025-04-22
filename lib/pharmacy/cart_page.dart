@@ -153,7 +153,7 @@ class _CartPageState extends State<CartPage> {
                                     ),
                                     SizedBox(height: 4),
                                     Text(
-                                      'Rp. ${(item.price * item.quantity).toStringAsFixed(2)}',
+                                      'Rp. ${(item.price * item.quantity)}',
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
@@ -189,6 +189,27 @@ class _CartPageState extends State<CartPage> {
                                   ],
                                 ),
                               ),
+                              // DropdownButton untuk memilih status pemesanan
+                              DropdownButton<String>(
+                                value: item.orderStatus,
+                                icon: Icon(Icons.arrow_drop_down, color: Colors.teal),
+                                style: TextStyle(color: Colors.black87, fontSize: 14),
+                                dropdownColor: Colors.teal[50],
+                                items: ['Anak - anak', 'Dewasa'].map((String status) {
+                                  return DropdownMenuItem<String>(
+                                    value: status,
+                                    child: Text(status),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newStatus) {
+                                  if (newStatus != null) {
+                                    Provider.of<CartProvider>(context, listen: false)
+                                        .updateOrderStatus(item.name, newStatus);
+                                  }
+                                },
+                              ),
+                              SizedBox(width: 8),
+                              // Tombol hapus
                               IconButton(
                                 icon: Icon(Icons.delete, color: Colors.red),
                                 onPressed: () {
@@ -219,7 +240,7 @@ class _CartPageState extends State<CartPage> {
                             ),
                           ),
                           Text(
-                            'Rp. ${cart.totalPrice.toStringAsFixed(2)}',
+                            'Rp. ${cart.totalPrice}',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

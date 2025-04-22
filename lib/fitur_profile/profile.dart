@@ -48,7 +48,7 @@ class ProfilePage extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 50,
                         backgroundImage: AssetImage(
-                            'assets/images/profile.png'), // Ganti dengan path gambar lokal
+                            'assets/gambar7.jpg'), // Ganti dengan path gambar lokal
                       ),
                     ),
                     SizedBox(height: 15),

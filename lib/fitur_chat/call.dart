@@ -39,7 +39,7 @@ class CallPage extends StatelessWidget {
             // Foto dokter
             CircleAvatar(
               radius: 80,
-              backgroundImage: AssetImage('assets/images/doctor1.png'),
+              backgroundImage: AssetImage('assets/gambar8.png'),
             ),
 
             // Tombol kontrol panggilan
