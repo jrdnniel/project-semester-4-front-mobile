@@ -44,6 +44,9 @@ class ChatPage extends StatelessWidget {
     },
   ];
 
+  // State untuk FilterChip (contoh spesialisasi yang dipilih)
+  final List<String> _selectedSpecializations = [];
+
   ChatPage({super.key});
 
   @override
@@ -95,6 +98,34 @@ class ChatPage extends StatelessWidget {
                       borderSide: BorderSide.none,
                     ),
                   ),
+                ),
+                SizedBox(height: 20),
+
+                // Filter Chips untuk spesialisasi dokter
+                Wrap(
+                  spacing: 8.0,
+                  children: [
+                    FilterChip(
+                      label: Text('Belum Terbaca'),
+                      selected: _selectedSpecializations.contains('Belum Terbaca'),
+                      onSelected: (bool selected) {
+                        if (selected) {
+                          _selectedSpecializations.add('Belum Terbaca');
+                        } else {
+                          _selectedSpecializations.remove('Belum Terbaca');
+                        }}
+                    ),
+                    FilterChip(
+                      label: Text('Terbaca'),
+                      selected: _selectedSpecializations.contains('Terbaca'),
+                      onSelected: (bool selected) {
+                        if (selected) {
+                          _selectedSpecializations.add('Terbaca');
+                        } else {
+                          _selectedSpecializations.remove('Terbaca');
+                        }}
+                    ),
+                  ],
                 ),
                 SizedBox(height: 20),
 

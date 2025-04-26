@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.teal,
         ),
+        debugShowCheckedModeBanner: false, // Menghilangkan debug banner
         home: const SplashPage(), // Langsung ke SplashPage
       ),
     );
