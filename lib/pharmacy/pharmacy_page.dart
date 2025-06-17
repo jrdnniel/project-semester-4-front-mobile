@@ -427,7 +427,7 @@ class ProductDetailDialog extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              'Rp.${price}',
+              'Rp.$price',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

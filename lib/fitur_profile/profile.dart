@@ -1,8 +1,70 @@
 import 'package:flutter/material.dart';
-import '../login_register/login.dart'; // Import halaman login.dart (sesuaikan path jika perlu)
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import '../login_register/login.dart';
+import '../fitur_tambahan/payment_method_page.dart'; // Import halaman PaymentMethodPage
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage(ImageSource source) async {
+    final XFile? pickedFile = await _picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  void _showImageSourceDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Pilih Sumber Gambar'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                ListTile(
+                  leading: const Icon(Icons.photo_library),
+                  title: const Text('Galeri'),
+                  onTap: () {
+                    _pickImage(ImageSource.gallery);
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.camera_alt),
+                  title: const Text('Kamera'),
+                  onTap: () {
+                    _pickImage(ImageSource.camera);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Batal'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,48 +74,73 @@ class ProfilePage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // Header dengan latar belakang gradien
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20.0),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Colors.teal[100]!, // Hijau mint cerah
-                      Colors.teal[50]!, // Hijau mint lebih terang
+                      Colors.teal[100]!,
+                      Colors.teal[50]!,
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30),
                   ),
                 ),
                 child: Column(
                   children: [
-                    // Foto profil dengan border putih
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 3),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 6,
-                            offset: Offset(0, 3),
+                    Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white, width: 3),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 6,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: AssetImage(
-                            'assets/gambar7.jpg'), // Ganti dengan path gambar lokal
-                      ),
+                          child: GestureDetector(
+                            onTap: () => _showImageSourceDialog(context),
+                            child: CircleAvatar(
+                              radius: 50,
+                              backgroundImage: _image != null
+                                  ? FileImage(_image!) as ImageProvider<Object>?
+                                  : const AssetImage('assets/gambar7.jpg'),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: () => _showImageSourceDialog(context),
+                            child: Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                color: Colors.teal,
+                                shape: BoxShape.circle,
+                                border: Border.all(color: Colors.white, width: 2),
+                              ),
+                              child: const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 15),
-                    // Nama pengguna dengan font bawaan
-                    Text(
+                    const SizedBox(height: 15),
+                    const Text(
                       'Nayla Socans',
                       style: TextStyle(
                         fontSize: 28,
@@ -61,9 +148,8 @@ class ProfilePage extends StatelessWidget {
                         color: Colors.black87,
                       ),
                     ),
-                    SizedBox(height: 20),
-                    // Kartu data kesehatan dengan animasi
-                    Row(
+                    const SizedBox(height: 20),
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         AnimatedHealthCard(
@@ -89,9 +175,7 @@ class ProfilePage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-
-              // Daftar menu
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
@@ -105,7 +189,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                     ProfileMenuItem(
                       icon: Icons.calendar_today,
-                      label: 'Appointmnet',
+                      label: 'Appointment',
                       onTap: () {
                         // Aksi untuk Appointment
                       },
@@ -114,11 +198,15 @@ class ProfilePage extends StatelessWidget {
                       icon: Icons.payment,
                       label: 'Payment Method',
                       onTap: () {
-                        // Aksi untuk Payment Method
+                        // --- Tambahkan navigasi ke PaymentMethodPage di sini ---
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PaymentMethodPage()),
+                        );
                       },
                     ),
                     ProfileMenuItem(
-                      icon: Icons.question_answer,
+                      icon: Icons.mode_comment_rounded,
                       label: 'FAQs',
                       onTap: () {
                         // Aksi untuk FAQs
@@ -128,18 +216,17 @@ class ProfilePage extends StatelessWidget {
                       icon: Icons.logout,
                       label: 'Logout',
                       onTap: () {
-                        // Navigasi ke halaman LoginPage
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage()), // Ganti LoginPage dengan nama class di login.dart
+                          MaterialPageRoute(builder: (context) => LoginPage()),
                         );
                       },
-                      isLogout: true, // Untuk gaya khusus Logout
+                      isLogout: true,
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -148,14 +235,19 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-// Widget untuk kartu data kesehatan dengan animasi
+// Widget AnimatedHealthCard dan ProfileMenuItem tetap sama seperti sebelumnya
+// (Saya tidak menyertakannya di sini untuk menjaga fokus pada perubahan,
+// tetapi pastikan mereka ada di file Anda).
+
+// Widget untuk kartu data kesehatan dengan animasi (TETAP SAMA)
 class AnimatedHealthCard extends StatefulWidget {
   final IconData icon;
   final String label;
   final String value;
   final int delay;
 
-  const AnimatedHealthCard({super.key, 
+  const AnimatedHealthCard({
+    super.key,
     required this.icon,
     required this.label,
     required this.value,
@@ -176,7 +268,7 @@ class _AnimatedHealthCardState extends State<AnimatedHealthCard>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
 
@@ -188,7 +280,6 @@ class _AnimatedHealthCardState extends State<AnimatedHealthCard>
       CurvedAnimation(parent: _controller, curve: Curves.easeIn),
     );
 
-    // Mulai animasi dengan delay
     Future.delayed(Duration(milliseconds: widget.delay), () {
       _controller.forward();
     });
@@ -207,21 +298,21 @@ class _AnimatedHealthCardState extends State<AnimatedHealthCard>
       child: ScaleTransition(
         scale: _scaleAnimation,
         child: Card(
-          elevation: 2, // Bayangan lebih lembut
+          elevation: 2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
           child: Container(
             width: 110,
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
             child: Column(
               children: [
                 Icon(
                   widget.icon,
-                  color: Colors.teal[600], // Warna ikon lebih cerah
+                  color: Colors.teal[600],
                   size: 24,
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
                   widget.label,
                   style: TextStyle(
@@ -230,10 +321,10 @@ class _AnimatedHealthCardState extends State<AnimatedHealthCard>
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
                   widget.value,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
@@ -248,14 +339,15 @@ class _AnimatedHealthCardState extends State<AnimatedHealthCard>
   }
 }
 
-// Widget untuk item menu profil
+// Widget untuk item menu profil (TETAP SAMA)
 class ProfileMenuItem extends StatelessWidget {
   final IconData icon;
   final String label;
   final VoidCallback onTap;
   final bool isLogout;
 
-  const ProfileMenuItem({super.key, 
+  const ProfileMenuItem({
+    super.key,
     required this.icon,
     required this.label,
     required this.onTap,
@@ -265,10 +357,10 @@ class ProfileMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 20.0),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
       leading: Icon(
         icon,
-        color: isLogout ? Colors.red : Colors.teal[600], // Warna ikon lebih cerah
+        color: isLogout ? Colors.red : Colors.teal[600],
         size: 20,
       ),
       title: Text(
@@ -278,7 +370,7 @@ class ProfileMenuItem extends StatelessWidget {
           color: isLogout ? Colors.red : Colors.black87,
         ),
       ),
-      trailing: Icon(
+      trailing: const Icon(
         Icons.arrow_forward_ios,
         color: Colors.grey,
         size: 16,
