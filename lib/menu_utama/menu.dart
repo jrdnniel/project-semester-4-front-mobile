@@ -1,3 +1,5 @@
+import 'package:doctor/fitur_profile/profile.dart';
+import 'package:doctor/login_register/login.dart';
 import 'package:flutter/material.dart';
 import 'dart:async'; // Untuk menggunakan Timer
 import '../notif.dart'; // Import halaman notif.dart
@@ -14,13 +16,15 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
+  // TAMBAHKAN: GlobalKey untuk mengontrol Scaffold
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   final List<String> bannerImages = [
     'assets/gambar3.png',
     'assets/gambar3.png',
     'assets/gambar3.png',
   ];
 
-  // List untuk kalimat banner
   final List<String> bannerTexts = [
     'Pertolongan Pertama terhadap Kesehatan Keluarga',
     'Keluarga sehat hati pun gembira',
@@ -34,7 +38,7 @@ class _MenuPageState extends State<MenuPage> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(seconds: 3), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       if (!mounted) return;
       if (_currentPage < bannerImages.length - 1) {
         _currentPage++;
@@ -43,7 +47,7 @@ class _MenuPageState extends State<MenuPage> {
       }
       _pageController.animateToPage(
         _currentPage,
-        duration: Duration(milliseconds: 800),
+        duration: const Duration(milliseconds: 800),
         curve: Curves.easeInOut,
       );
     });
@@ -59,11 +63,11 @@ class _MenuPageState extends State<MenuPage> {
   void _showFilterBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (BuildContext context) {
-        return FilterBottomSheet();
+        return const FilterBottomSheet();
       },
     );
   }
@@ -71,6 +75,9 @@ class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // TAMBAHKAN: key dan drawer pada Scaffold
+      key: _scaffoldKey,
+      drawer: const MyDrawer(), // Widget drawer yang akan kita buat
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -81,7 +88,7 @@ class _MenuPageState extends State<MenuPage> {
                 padding: const EdgeInsets.all(20.0),
                 decoration: BoxDecoration(
                   color: Colors.teal[50],
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30),
                   ),
@@ -92,27 +99,34 @@ class _MenuPageState extends State<MenuPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundImage: AssetImage(
-                                'assets/gambar7.jpg',
+                        // MODIFIKASI: Bungkus Row dengan GestureDetector
+                        GestureDetector(
+                          onTap: () {
+                            // Aksi untuk membuka drawer
+                            _scaffoldKey.currentState?.openDrawer();
+                          },
+                          child: const Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 20,
+                                backgroundImage: AssetImage(
+                                  'assets/gambar7.jpg',
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Hi, Nayla',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
+                              SizedBox(width: 10),
+                              Text(
+                                'Hi, Nayla',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         IconButton(
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.notifications,
                             color: Colors.black87,
                           ),
@@ -122,7 +136,7 @@ class _MenuPageState extends State<MenuPage> {
                               PageRouteBuilder(
                                 pageBuilder:
                                     (context, animation, secondaryAnimation) =>
-                                        NotifPage(),
+                                        const NotifPage(),
                                 transitionsBuilder: (
                                   context,
                                   animation,
@@ -148,7 +162,7 @@ class _MenuPageState extends State<MenuPage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     RichText(
                       text: TextSpan(
                         children: [
@@ -163,15 +177,15 @@ class _MenuPageState extends State<MenuPage> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Kategori
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(
                   'Kategori',
                   style: TextStyle(
@@ -181,7 +195,7 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
@@ -261,7 +275,7 @@ class _MenuPageState extends State<MenuPage> {
                       },
                     ),
                     CategoryButton(
-                      icon: Icons.local_hospital,
+                      icon: Icons.car_rental, // Mengganti ikon ambulans
                       label: 'Ambulans',
                       onTap: () {
                         Navigator.push(
@@ -296,7 +310,7 @@ class _MenuPageState extends State<MenuPage> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Banner dengan PageView
               Padding(
@@ -313,7 +327,7 @@ class _MenuPageState extends State<MenuPage> {
                     },
                     itemBuilder: (context, index) {
                       return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
                         decoration: BoxDecoration(
                           color: Colors.teal[50],
                           borderRadius: BorderRadius.circular(15),
@@ -324,14 +338,14 @@ class _MenuPageState extends State<MenuPage> {
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: Text(
-                                  bannerTexts[index], // Gunakan kalimat dari list
-                                  style: TextStyle(
+                                  bannerTexts[index],
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black87,
                                   ),
-                                  maxLines: 2, // Batasi jumlah baris
-                                  overflow: TextOverflow.ellipsis, // Elipsis jika teks panjang
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ),
@@ -341,7 +355,7 @@ class _MenuPageState extends State<MenuPage> {
                               fit: BoxFit.contain,
                               errorBuilder:
                                   (context, error, stackTrace) =>
-                                      Icon(Icons.broken_image),
+                                      const Icon(Icons.broken_image),
                             ),
                           ],
                         ),
@@ -350,11 +364,11 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Top Doctor
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(
                   'Top Doctor',
                   style: TextStyle(
@@ -364,7 +378,7 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
@@ -436,7 +450,7 @@ class _MenuPageState extends State<MenuPage> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -445,13 +459,61 @@ class _MenuPageState extends State<MenuPage> {
   }
 }
 
+// TAMBAHKAN: Widget baru untuk Drawer
+class MyDrawer extends StatelessWidget {
+  const MyDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          const UserAccountsDrawerHeader(
+            accountName: Text(
+              "Nayla",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            accountEmail: Text("nayla.s@example.com"),
+            currentAccountPicture: CircleAvatar(
+              backgroundImage: AssetImage('assets/gambar7.jpg'),
+            ),
+            decoration: BoxDecoration(color: Colors.teal),
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text('Pengaturan'),
+            onTap: () {
+              // Arahkan ke halaman pengaturan
+              Navigator.pop(context);
+            },
+          ),
+          const Divider(), // Garis pemisah
+          ListTile(
+            leading: const Icon(Icons.logout, color: Colors.red),
+            title: const Text('Logout', style: TextStyle(color: Colors.red)),
+            onTap: () {
+              // Logika untuk logout
+              Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Widget lainnya (CategoryButton, DoctorCard, dll.) tetap di bawah sini...
+// Pastikan widget-widget tersebut tidak dihapus.
+
 // Widget untuk tombol kategori
 class CategoryButton extends StatelessWidget {
   final IconData icon;
   final String label;
   final VoidCallback onTap;
 
-  const CategoryButton({super.key, 
+  const CategoryButton({
+    super.key,
     required this.icon,
     required this.label,
     required this.onTap,
@@ -464,15 +526,18 @@ class CategoryButton extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
               color: Colors.teal[50],
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(icon, color: Colors.teal, size: 30),
           ),
-          SizedBox(height: 5),
-          Text(label, style: TextStyle(fontSize: 14, color: Colors.black87)),
+          const SizedBox(height: 5),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 14, color: Colors.black87),
+          ),
         ],
       ),
     );
@@ -489,7 +554,8 @@ class DoctorCard extends StatelessWidget {
   final String description;
   final VoidCallback onTap;
 
-  const DoctorCard({super.key, 
+  const DoctorCard({
+    super.key,
     required this.image,
     required this.name,
     required this.rating,
@@ -508,33 +574,33 @@ class DoctorCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Container(
           width: 100,
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               CircleAvatar(radius: 40, backgroundImage: AssetImage(image)),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 name,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.star, color: Colors.yellow, size: 16),
-                  SizedBox(width: 5),
+                  const Icon(Icons.star, color: Colors.yellow, size: 16),
+                  const SizedBox(width: 5),
                   Text(
                     rating,
                     style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                   ),
                 ],
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Text(
                 distance,
                 style: TextStyle(fontSize: 12, color: Colors.grey[600]),
@@ -555,7 +621,8 @@ class DoctorDetailDialog extends StatelessWidget {
   final String specialization;
   final String description;
 
-  const DoctorDetailDialog({super.key, 
+  const DoctorDetailDialog({
+    super.key,
     required this.image,
     required this.name,
     required this.rating,
@@ -568,28 +635,28 @@ class DoctorDetailDialog extends StatelessWidget {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             CircleAvatar(radius: 50, backgroundImage: AssetImage(image)),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Row(
                   children: [
-                    Icon(Icons.star, color: Colors.yellow, size: 16),
-                    SizedBox(width: 5),
+                    const Icon(Icons.star, color: Colors.yellow, size: 16),
+                    const SizedBox(width: 5),
                     Text(
                       rating,
                       style: TextStyle(fontSize: 14, color: Colors.grey[600]),
@@ -598,18 +665,18 @@ class DoctorDetailDialog extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Text(
               specialization,
               style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Text(
               description,
-              style: TextStyle(fontSize: 14, color: Colors.black87),
+              style: const TextStyle(fontSize: 14, color: Colors.black87),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -643,7 +710,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -651,7 +718,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Filter List',
                 style: TextStyle(
                   fontSize: 18,
@@ -666,16 +733,15 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     _selectedCategory = null;
                   });
                 },
-                child: Text(
+                child: const Text(
                   'Clear filter',
                   style: TextStyle(fontSize: 14, color: Colors.red),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 20),
-
-          Text(
+          const SizedBox(height: 20),
+          const Text(
             'Sort specialist',
             style: TextStyle(
               fontSize: 16,
@@ -683,7 +749,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               color: Colors.black87,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             children: [
               Expanded(
@@ -698,7 +764,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         });
                       },
                     ),
-                    Text('From A-Z'),
+                    const Text('From A-Z'),
                   ],
                 ),
               ),
@@ -714,15 +780,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         });
                       },
                     ),
-                    Text('From Z-A'),
+                    const Text('From Z-A'),
                   ],
                 ),
               ),
             ],
           ),
-          SizedBox(height: 20),
-
-          Text(
+          const SizedBox(height: 20),
+          const Text(
             'Select service category',
             style: TextStyle(
               fontSize: 16,
@@ -730,7 +795,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               color: Colors.black87,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(
             height: 200,
             child: ListView.builder(
@@ -754,8 +819,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               },
             ),
           ),
-          SizedBox(height: 20),
-
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -766,9 +830,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.grey[300],
                   foregroundColor: Colors.black,
-                  minimumSize: Size(150, 50),
+                  minimumSize: const Size(150, 50),
                 ),
-                child: Text('CANCEL'),
+                child: const Text('CANCEL'),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -787,9 +851,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                   foregroundColor: Colors.white,
-                  minimumSize: Size(150, 50),
+                  minimumSize: const Size(150, 50),
                 ),
-                child: Text('SHOW'),
+                child: const Text('SHOW'),
               ),
             ],
           ),

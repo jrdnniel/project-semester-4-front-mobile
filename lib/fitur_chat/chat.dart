@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../menu_utama/main_page.dart'; // Import halaman main_page.dart untuk navigasi kembali
-import 'package:doctor/fitur_chat/chat_detail.dart'; // Import halaman chat_detail.dart
+import '../menu_utama/main_page.dart'; 
+import 'package:doctor/fitur_chat/chat_detail.dart'; 
 
 class ChatPage extends StatelessWidget {
-  // Data dummy untuk dokter yang aktif
+
   final List<Map<String, String>> activeDoctors = [
     {'image': 'assets/gambar8.png'},
     {'image': 'assets/gambar9.png'},
@@ -44,7 +44,7 @@ class ChatPage extends StatelessWidget {
     },
   ];
 
-  // State untuk FilterChip (contoh spesialisasi yang dipilih)
+
   final List<String> _selectedSpecializations = [];
 
   ChatPage({super.key});
@@ -56,7 +56,8 @@ class ChatPage extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -65,13 +66,13 @@ class ChatPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.arrow_back, color: Colors.black87),
+                      icon: const Icon(Icons.arrow_back, color: Colors.black87),
                       onPressed: () {
-                        // Kembali ke MenuPage (indeks 0) dengan mengubah indeks di MainPage
+                       
                         MainPage.globalKey.currentState?.setIndex(0);
                       },
                     ),
-                    Text(
+                    const Text(
                       'Chat',
                       style: TextStyle(
                         fontSize: 20,
@@ -79,10 +80,11 @@ class ChatPage extends StatelessWidget {
                         color: Colors.black87,
                       ),
                     ),
-                    SizedBox(width: 40), // Spacer untuk menjaga tata letak
+                    const SizedBox(
+                        width: 40), // Spacer untuk menjaga tata letak
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Search Bar
                 TextField(
@@ -99,38 +101,39 @@ class ChatPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Filter Chips untuk spesialisasi dokter
                 Wrap(
                   spacing: 8.0,
                   children: [
                     FilterChip(
-                      label: Text('Belum Terbaca'),
-                      selected: _selectedSpecializations.contains('Belum Terbaca'),
-                      onSelected: (bool selected) {
-                        if (selected) {
-                          _selectedSpecializations.add('Belum Terbaca');
-                        } else {
-                          _selectedSpecializations.remove('Belum Terbaca');
-                        }}
-                    ),
+                        label: const Text('Belum Terbaca'),
+                        selected:
+                            _selectedSpecializations.contains('Belum Terbaca'),
+                        onSelected: (bool selected) {
+                          if (selected) {
+                            _selectedSpecializations.add('Belum Terbaca');
+                          } else {
+                            _selectedSpecializations.remove('Belum Terbaca');
+                          }
+                        }),
                     FilterChip(
-                      label: Text('Terbaca'),
-                      selected: _selectedSpecializations.contains('Terbaca'),
-                      onSelected: (bool selected) {
-                        if (selected) {
-                          _selectedSpecializations.add('Terbaca');
-                        } else {
-                          _selectedSpecializations.remove('Terbaca');
-                        }}
-                    ),
+                        label: const Text('Terbaca'),
+                        selected: _selectedSpecializations.contains('Terbaca'),
+                        onSelected: (bool selected) {
+                          if (selected) {
+                            _selectedSpecializations.add('Terbaca');
+                          } else {
+                            _selectedSpecializations.remove('Terbaca');
+                          }
+                        }),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Active Now
-                Text(
+                const Text(
                   'Active Now',
                   style: TextStyle(
                     fontSize: 18,
@@ -138,7 +141,7 @@ class ChatPage extends StatelessWidget {
                     color: Colors.black87,
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 SizedBox(
                   height: 60,
                   child: ListView.builder(
@@ -151,7 +154,8 @@ class ChatPage extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               radius: 30,
-                              backgroundImage: AssetImage(activeDoctors[index]['image']!),
+                              backgroundImage:
+                                  AssetImage(activeDoctors[index]['image']!),
                             ),
                             Positioned(
                               bottom: 0,
@@ -162,7 +166,8 @@ class ChatPage extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   color: Colors.green,
                                   shape: BoxShape.circle,
-                                  border: Border.all(color: Colors.white, width: 2),
+                                  border:
+                                      Border.all(color: Colors.white, width: 2),
                                 ),
                               ),
                             ),
@@ -172,10 +177,10 @@ class ChatPage extends StatelessWidget {
                     },
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Messages
-                Text(
+                const Text(
                   'Messages',
                   style: TextStyle(
                     fontSize: 18,
@@ -183,28 +188,35 @@ class ChatPage extends StatelessWidget {
                     color: Colors.black87,
                   ),
                 ),
-                SizedBox(height: 10),
-                ListView.builder(
+                const SizedBox(height: 10),
+
+                
+                ListView.separated(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: messages.length,
+                 
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        // Navigasi ke ChatDetailPage dengan nama dan gambar dokter
+                      
                         Navigator.push(
                           context,
                           PageRouteBuilder(
-                            pageBuilder: (context, animation, secondaryAnimation) => ChatDetailPage(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    ChatDetailPage(
                               doctorName: messages[index]['name'],
                               doctorImage: messages[index]['image'],
                             ),
-                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                              const begin = Offset(-1.0, 0.0); // Mulai dari kiri
-                              const end = Offset.zero; // Berakhir di posisi normal
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              const begin = Offset(-1.0, 0.0);
+                              const end = Offset.zero;
                               const curve = Curves.easeInOut;
 
-                              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
                               var offsetAnimation = animation.drive(tween);
 
                               return SlideTransition(
@@ -216,26 +228,28 @@ class ChatPage extends StatelessWidget {
                         );
                       },
                       child: Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
+                        padding: const EdgeInsets.symmetric(vertical: 10.0), // Beri padding vertikal
                         child: Row(
                           children: [
                             // Foto dokter
                             CircleAvatar(
-                              radius: 25,
-                              backgroundImage: AssetImage(messages[index]['image']),
+                              radius: 30,
+                              backgroundImage:
+                                  AssetImage(messages[index]['image']),
                             ),
-                            SizedBox(width: 15),
+                            const SizedBox(width: 15),
                             // Nama dan pesan
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         messages[index]['name'],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black87,
@@ -250,7 +264,7 @@ class ChatPage extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Text(
                                     messages[index]['message'],
                                     style: TextStyle(
@@ -264,17 +278,18 @@ class ChatPage extends StatelessWidget {
                             // Indikator pesan belum dibaca
                             if (messages[index]['unreadCount'] > 0)
                               Container(
-                                margin: EdgeInsets.only(left: 10),
-                                padding: EdgeInsets.all(6),
-                                decoration: BoxDecoration(
+                                margin: const EdgeInsets.only(left: 10),
+                                padding: const EdgeInsets.all(8),
+                                decoration: const BoxDecoration(
                                   color: Colors.teal,
                                   shape: BoxShape.circle,
                                 ),
                                 child: Text(
                                   messages[index]['unreadCount'].toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 12,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
@@ -283,6 +298,12 @@ class ChatPage extends StatelessWidget {
                       ),
                     );
                   },
+                
+                  separatorBuilder: (context, index) => Divider(
+                    color: Colors.grey[200], 
+                    thickness: 1, 
+                    height: 20, 
+                  ),
                 ),
               ],
             ),
