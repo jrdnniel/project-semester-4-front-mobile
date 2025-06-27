@@ -76,7 +76,7 @@ class _MenuPageState extends State<MenuPage> {
     return Scaffold(
       // TAMBAHKAN: key dan drawer pada Scaffold
       key: _scaffoldKey,
-      drawer: const MyDrawer(), // Widget drawer yang akan kita buat
+      drawer: const MyDrawer(), 
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(

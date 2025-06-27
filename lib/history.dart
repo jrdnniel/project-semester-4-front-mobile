@@ -26,6 +26,105 @@ class HistoryPage extends StatelessWidget {
         ),
         backgroundColor: Colors.teal[50],
         elevation: 0,
+        actions: [
+          PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert, color: Colors.black),
+            onSelected: (value) {
+              switch (value) {
+                case 'clear':
+                  // Clear semua transaksi
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text('Hapus Riwayat'),
+                      content: Text('Apakah Anda yakin ingin menghapus semua riwayat pembelian?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('Batal'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            cartProvider.clearTransactions();
+                            Navigator.pop(context);
+                          },
+                          child: Text('Hapus'),
+                        ),
+                      ],
+                    ),
+                  );
+                  break;
+                case 'mark_read':
+                  // Tandai semua sebagai dibaca
+                  cartProvider.markAllAsRead();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Semua riwayat ditandai sebagai dibaca')),
+                  );
+                  break;
+                case 'sort_date':
+                  // Urutkan berdasarkan tanggal
+                  cartProvider.sortByDate();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Riwayat diurutkan berdasarkan tanggal')),
+                  );
+                  break;
+                case 'filter_status':
+                  // Filter berdasarkan status
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text('Filter Status'),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ListTile(
+                            title: Text('Semua Status'),
+                            onTap: () {
+                              cartProvider.filterByStatus(null);
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            title: Text('Selesai'),
+                            onTap: () {
+                              cartProvider.filterByStatus('Selesai');
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            title: Text('Dalam Proses'),
+                            onTap: () {
+                              cartProvider.filterByStatus('Dalam Proses');
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                  break;
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'clear',
+                child: Text('Clear Riwayat'),
+              ),
+              PopupMenuItem(
+                value: 'mark_read',
+                child: Text('Tandai Semua Dibaca'),
+              ),
+              PopupMenuItem(
+                value: 'sort_date',
+                child: Text('Urutkan berdasarkan Tanggal'),
+              ),
+              PopupMenuItem(
+                value: 'filter_status',
+                child: Text('Filter berdasarkan Status'),
+              ),
+            ],
+          ),
+        ],
       ),
       body: transactions.isEmpty
           ? Center(
@@ -66,7 +165,7 @@ class HistoryPage extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
+                                  color: transaction.isRead ? Colors.black87 : Colors.blue,
                                 ),
                               ),
                               SizedBox(height: 4),

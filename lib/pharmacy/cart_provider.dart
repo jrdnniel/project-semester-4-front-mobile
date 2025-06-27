@@ -26,6 +26,7 @@ class Transaction {
   final int quantity;
   final String orderStatus;
   final DateTime date;
+  bool isRead; // Perbaiki properti isRead
 
   Transaction({
     required this.name,
@@ -35,12 +36,14 @@ class Transaction {
     required this.quantity,
     required this.orderStatus,
     required this.date,
+    this.isRead = false, // Default: belum dibaca
   });
 }
 
 class CartProvider with ChangeNotifier {
   final List<CartItem> _items = [];
-  final List<Transaction> _transactions = []; // List untuk riwayat transaksi
+  List<Transaction> _transactions = []; // List untuk riwayat transaksi
+  List<Transaction> _originalTransactions = []; // Backup untuk filter
 
   List<CartItem> get items => _items;
   List<Transaction> get transactions => _transactions; // Getter untuk riwayat
@@ -63,7 +66,7 @@ class CartProvider with ChangeNotifier {
   void clearCart() {
     // Simpan item ke riwayat sebelum menghapus
     for (var item in _items) {
-      _transactions.add(Transaction(
+      final transaction = Transaction(
         name: item.name,
         description: item.description,
         price: item.price,
@@ -71,7 +74,10 @@ class CartProvider with ChangeNotifier {
         quantity: item.quantity,
         orderStatus: item.orderStatus,
         date: DateTime.now(),
-      ));
+        isRead: false,
+      );
+      _transactions.add(transaction);
+      _originalTransactions.add(transaction); // Simpan ke backup
     }
     _items.clear();
     notifyListeners();
@@ -87,5 +93,40 @@ class CartProvider with ChangeNotifier {
       _items[index].orderStatus = newStatus;
       notifyListeners();
     }
+  }
+
+  // Tandai semua transaksi sebagai dibaca
+  void markAllAsRead() {
+    for (var transaction in _transactions) {
+      transaction.isRead = true;
+    }
+    notifyListeners();
+  }
+
+  // Urutkan transaksi berdasarkan tanggal (terbaru ke terlama)
+  void sortByDate() {
+    _transactions.sort((a, b) => b.date.compareTo(a.date));
+    notifyListeners();
+  }
+
+  // Hapus semua transaksi
+  void clearTransactions() {
+    _transactions.clear();
+    _originalTransactions.clear(); // Kosongkan juga backup
+    notifyListeners();
+  }
+
+  // Filter transaksi berdasarkan status
+  void filterByStatus(String? status) {
+    if (status == null) {
+      // Kembalikan semua transaksi dari backup
+      _transactions = List.from(_originalTransactions);
+    } else {
+      // Filter berdasarkan status
+      _transactions = _originalTransactions
+          .where((transaction) => transaction.orderStatus == status)
+          .toList();
+    }
+    notifyListeners();
   }
 }

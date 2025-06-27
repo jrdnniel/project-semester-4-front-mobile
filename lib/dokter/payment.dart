@@ -13,6 +13,7 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   String? _selectedPaymentMethod;
   final TextEditingController _patientNameController = TextEditingController();
+  bool _isProcessing = false; // Variabel untuk mengontrol status proses pembayaran
 
   @override
   void dispose() {
@@ -95,6 +96,23 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 
+  // Fungsi untuk mensimulasikan proses pembayaran
+  Future<void> _processPayment(BuildContext context) async {
+    setState(() {
+      _isProcessing = true; // Mulai proses, tampilkan indikator
+    });
+
+    // Simulasikan proses pembayaran dengan jeda 2 detik
+    await Future.delayed(Duration(seconds: 2));
+
+    setState(() {
+      _isProcessing = false; // Selesai proses
+    });
+
+    // Tampilkan dialog sukses setelah proses selesai
+    _showSuccessDialog(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,126 +124,165 @@ class _PaymentPageState extends State<PaymentPage> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Column(
-                children: [
-                  Text(
-                    'TOTAL',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Rp. 100.000,00',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 30),
-            Text(
-              'Nama Pasien',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            SizedBox(height: 10),
-            TextField(
-              controller: _patientNameController,
-              decoration: InputDecoration(
-                hintText: 'Masukkan nama pasien',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Metode Pembayaran',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ChoiceChip(
-                  label: Text('Card Payment'),
-                  selected: _selectedPaymentMethod == 'Card',
-                  onSelected: (selected) {
-                    setState(() {
-                      _selectedPaymentMethod = selected ? 'Card' : null;
-                    });
-                  },
-                  selectedColor: Colors.teal[100],
-                  backgroundColor: Colors.grey[200],
+                Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        'TOTAL',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Rp. 100.000,00',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                ChoiceChip(
-                  label: Text('Cash Payment'),
-                  selected: _selectedPaymentMethod == 'Cash',
-                  onSelected: (selected) {
-                    setState(() {
-                      _selectedPaymentMethod = selected ? 'Cash' : null;
-                    });
-                  },
-                  selectedColor: Colors.teal[100],
-                  backgroundColor: Colors.grey[200],
+                SizedBox(height: 30),
+                Text(
+                  'Nama Pasien',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                SizedBox(height: 10),
+                TextField(
+                  controller: _patientNameController,
+                  decoration: InputDecoration(
+                    hintText: 'Masukkan nama pasien',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Metode Pembayaran',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ChoiceChip(
+                      label: Text('Card Payment'),
+                      selected: _selectedPaymentMethod == 'Card',
+                      onSelected: (selected) {
+                        setState(() {
+                          _selectedPaymentMethod = selected ? 'Card' : null;
+                        });
+                      },
+                      selectedColor: Colors.teal[100],
+                      backgroundColor: Colors.grey[200],
+                    ),
+                    ChoiceChip(
+                      label: Text('Cash Payment'),
+                      selected: _selectedPaymentMethod == 'Cash',
+                      onSelected: (selected) {
+                        setState(() {
+                          _selectedPaymentMethod = selected ? 'Cash' : null;
+                        });
+                      },
+                      selectedColor: Colors.teal[100],
+                      backgroundColor: Colors.grey[200],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: _isProcessing
+                        ? null // Nonaktifkan tombol saat proses berlangsung
+                        : () {
+                            if (_patientNameController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Harap masukkan nama pasien')),
+                              );
+                              return;
+                            }
+                            if (_selectedPaymentMethod == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Harap pilih metode pembayaran')),
+                              );
+                              return;
+                            }
+
+                            print('Pembayaran selesai untuk: ${_patientNameController.text}');
+                            print('Metode: $_selectedPaymentMethod');
+                            print('Tanggal: ${widget.selectedDate}');
+
+                            _processPayment(context); // Panggil fungsi proses pembayaran
+                          },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.teal,
+                      foregroundColor: Colors.white,
+                      minimumSize: Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: _isProcessing
+                        ? SizedBox(
+                            height: 24,
+                            width: 24,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : Text('Pay Now'),
+                  ),
                 ),
               ],
             ),
-            SizedBox(height: 30),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_patientNameController.text.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Harap masukkan nama pasien')),
-                    );
-                    return;
-                  }
-                  if (_selectedPaymentMethod == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Harap pilih metode pembayaran')),
-                    );
-                    return;
-                  }
-
-                  print('Pembayaran selesai untuk: ${_patientNameController.text}');
-                  print('Metode: $_selectedPaymentMethod');
-                  print('Tanggal: ${widget.selectedDate}');
-
-                  _showSuccessDialog(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
-                  foregroundColor: Colors.white,
-                  minimumSize: Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+          ),
+          // Overlay indikator progres saat pembayaran sedang diproses
+          if (_isProcessing)
+            Container(
+              color: Colors.black.withOpacity(0.5), // Latar belakang semi-transparan
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      'Memproses Pembayaran...',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-                child: Text('Pay Now'),
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }
