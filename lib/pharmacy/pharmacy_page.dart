@@ -1,32 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart'; 
 import 'product_list_page.dart';
 import 'cart_provider.dart';
 import 'cart_page.dart';
 
 class PharmacyPage extends StatelessWidget {
   final List<Map<String, dynamic>> popularProducts = [
-    {'name': 'Panadol', 'description': '1 pcs', 'price': 8000, 'image': 'assets/gambar24.png'},
-    {'name': 'Bodrex Herbal', 'description': '100ml', 'price': 7000, 'image': 'assets/gambar22.png'},
-    {'name': 'Konidin', 'description': '3 pcs', 'price': 5000, 'image': 'assets/gambar23.png'},
+    {
+      'name': 'Panadol',
+      'description': '1 pcs',
+      'price': 8000.0,
+      'image': 'assets/gambar24.png',
+    },
+    {
+      'name': 'Bodrex Herbal',
+      'description': '100ml',
+      'price': 7000.0,
+      'image': 'assets/gambar22.png',
+    },
+    {
+      'name': 'Konidin',
+      'description': '3 pcs',
+      'price': 5000.0,
+      'image': 'assets/gambar23.png',
+    },
   ];
 
   final List<Map<String, dynamic>> saleProducts = [
-    {'name': 'OBH Combi', 'description': '75ml', 'price': 9000, 'image': 'assets/gambar21.png'},
-    {'name': 'Betadine', 'description': '50ml', 'price': 6000, 'image': 'assets/gambar22.png'},
-    {'name': 'Bodrexin', 'description': '75ml', 'price': 7000, 'image': 'assets/gambar23.png'},
+    {
+      'name': 'OBH Combi',
+      'description': '75ml',
+      'price': 9000.0,
+      'image': 'assets/gambar21.png',
+    },
+    {
+      'name': 'Betadine',
+      'description': '50ml',
+      'price': 6000.0,
+      'image': 'assets/gambar22.png',
+    },
+    {
+      'name': 'Bodrexin',
+      'description': '75ml',
+      'price': 7000.0,
+      'image': 'assets/gambar23.png',
+    },
   ];
-
-  // Fungsi untuk memformat harga ke IDR
-  String formatCurrency(double price) {
-    final currencyFormatter = NumberFormat.currency(
-      locale: 'id_ID',
-      symbol: 'Rp ',
-      decimalDigits: 0,
-    );
-    return currencyFormatter.format(price);
-  }
 
   PharmacyPage({super.key});
 
@@ -55,9 +74,7 @@ class PharmacyPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => CartPage(),
-                        ),
+                        MaterialPageRoute(builder: (context) => CartPage()),
                       );
                     },
                   ),
@@ -77,10 +94,7 @@ class PharmacyPage extends StatelessWidget {
                         ),
                         child: Text(
                           '${cart.items.length}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                          ),
+                          style: TextStyle(color: Colors.white, fontSize: 10),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -135,7 +149,9 @@ class PharmacyPage extends StatelessWidget {
                     width: 100,
                     height: 100,
                     fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) => Icon(Icons.broken_image),
+                    errorBuilder:
+                        (context, error, stackTrace) =>
+                            Icon(Icons.broken_image),
                   ),
                 ),
               ],
@@ -158,17 +174,15 @@ class PharmacyPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProductListPage(
-                        title: 'Popular Product',
-                        products: popularProducts,
-                      ),
+                      builder:
+                          (context) => ProductListPage(
+                            title: 'Popular Product',
+                            products: popularProducts,
+                          ),
                     ),
                   );
                 },
-                child: Text(
-                  'See all',
-                  style: TextStyle(color: Colors.teal),
-                ),
+                child: Text('See all', style: TextStyle(color: Colors.teal)),
               ),
             ],
           ),
@@ -195,18 +209,23 @@ class PharmacyPage extends StatelessWidget {
                       ),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('${product['name']} ditambahkan ke keranjang')),
+                      SnackBar(
+                        content: Text(
+                          '${product['name']} ditambahkan ke keranjang',
+                        ),
+                      ),
                     );
                   },
                   onTap: () {
                     showDialog(
                       context: context,
-                      builder: (context) => ProductDetailDialog(
-                        name: product['name'],
-                        description: product['description'],
-                        price: product['price'],
-                        image: product['image'],
-                      ),
+                      builder:
+                          (context) => ProductDetailDialog(
+                            name: product['name'],
+                            description: product['description'],
+                            price: product['price'],
+                            image: product['image'],
+                          ),
                     );
                   },
                 );
@@ -230,17 +249,15 @@ class PharmacyPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProductListPage(
-                        title: 'Product on SALE',
-                        products: saleProducts,
-                      ),
+                      builder:
+                          (context) => ProductListPage(
+                            title: 'Product on SALE',
+                            products: saleProducts,
+                          ),
                     ),
                   );
                 },
-                child: Text(
-                  'See all',
-                  style: TextStyle(color: Colors.teal),
-                ),
+                child: Text('See all', style: TextStyle(color: Colors.teal)),
               ),
             ],
           ),
@@ -267,18 +284,23 @@ class PharmacyPage extends StatelessWidget {
                       ),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('${product['name']} ditambahkan ke keranjang')),
+                      SnackBar(
+                        content: Text(
+                          '${product['name']} ditambahkan ke keranjang',
+                        ),
+                      ),
                     );
                   },
                   onTap: () {
                     showDialog(
                       context: context,
-                      builder: (context) => ProductDetailDialog(
-                        name: product['name'],
-                        description: product['description'],
-                        price: product['price'],
-                        image: product['image'],
-                      ),
+                      builder:
+                          (context) => ProductDetailDialog(
+                            name: product['name'],
+                            description: product['description'],
+                            price: product['price'],
+                            image: product['image'],
+                          ),
                     );
                   },
                 );
@@ -291,7 +313,7 @@ class PharmacyPage extends StatelessWidget {
   }
 }
 
-// Widget untuk kartu produk
+// // Widget untuk kartu produk
 class ProductCard extends StatelessWidget {
   final String name;
   final String description;
@@ -310,21 +332,12 @@ class ProductCard extends StatelessWidget {
     required this.onTap,
   });
 
-  String formatCurrency(double price) {
-    final currencyFormatter = NumberFormat.currency(
-      locale: 'id_ID',
-      symbol: 'Rp ',
-      decimalDigits: 0,
-    );
-    return currencyFormatter.format(price);
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 130,
+        width: 130, //
         margin: EdgeInsets.only(right: 16),
         child: Card(
           elevation: 2,
@@ -339,9 +352,12 @@ class ProductCard extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                   child: Image.asset(
                     image,
-                    width: double.infinity,
+                    width: 120,
+                    height: 120,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Icon(Icons.broken_image),
+                    errorBuilder:
+                        (context, error, stackTrace) =>
+                            Icon(Icons.error, color: Colors.red),
                   ),
                 ),
               ),
@@ -368,7 +384,7 @@ class ProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          formatCurrency(price),
+                          'Rp.${price.toStringAsFixed(0)}',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -407,21 +423,10 @@ class ProductDetailDialog extends StatelessWidget {
     required this.image,
   });
 
-  String formatCurrency(double price) {
-    final currencyFormatter = NumberFormat.currency(
-      locale: 'id_ID',
-      symbol: 'Rp ',
-      decimalDigits: 0,
-    );
-    return currencyFormatter.format(price);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Container(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -434,7 +439,9 @@ class ProductDetailDialog extends StatelessWidget {
                 width: 120,
                 height: 120,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Icon(Icons.broken_image, size: 120),
+                errorBuilder:
+                    (context, error, stackTrace) =>
+                        Icon(Icons.broken_image, size: 120),
               ),
             ),
             SizedBox(height: 15),
@@ -449,14 +456,11 @@ class ProductDetailDialog extends StatelessWidget {
             SizedBox(height: 5),
             Text(
               description,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-              ),
+              style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             ),
             SizedBox(height: 10),
             Text(
-              formatCurrency(price),
+              'Rp.${price.toStringAsFixed(0)}',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -480,9 +484,7 @@ class ProductDetailDialog extends StatelessWidget {
                 print('Dialog closed');
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => CartPage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => CartPage()),
                 );
                 print('Navigating to CartPage');
               },
