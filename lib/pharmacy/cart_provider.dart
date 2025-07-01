@@ -43,7 +43,7 @@ class Transaction {
 class CartProvider with ChangeNotifier {
   final List<CartItem> _items = [];
   List<Transaction> _transactions = []; // List untuk riwayat transaksi
-  List<Transaction> _originalTransactions = []; // Backup untuk filter
+  final List<Transaction> _originalTransactions = []; // Backup untuk filter
 
   List<CartItem> get items => _items;
   List<Transaction> get transactions => _transactions; // Getter untuk riwayat

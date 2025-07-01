@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart'; 
 import 'pharmacy/cart_provider.dart';
 import 'menu_utama/main_page.dart';
 
@@ -194,7 +195,7 @@ class HistoryPage extends StatelessWidget {
                               ),
                               SizedBox(height: 4),
                               Text(
-                                'Tanggal: ${transaction.date.toString().substring(0, 16)}',
+                                'Tanggal: ${DateFormat('dd MMMM yyyy, HH:mm').format(transaction.date)}',
                                 style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                               ),
                             ],

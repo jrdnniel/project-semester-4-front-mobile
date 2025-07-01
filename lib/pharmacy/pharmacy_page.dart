@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart'; 
 import 'product_list_page.dart';
 import 'cart_provider.dart';
-import 'cart_page.dart'; // Import halaman keranjang
+import 'cart_page.dart';
 
 class PharmacyPage extends StatelessWidget {
   final List<Map<String, dynamic>> popularProducts = [
@@ -16,6 +17,16 @@ class PharmacyPage extends StatelessWidget {
     {'name': 'Betadine', 'description': '50ml', 'price': 6000, 'image': 'assets/gambar22.png'},
     {'name': 'Bodrexin', 'description': '75ml', 'price': 7000, 'image': 'assets/gambar23.png'},
   ];
+
+  // Fungsi untuk memformat harga ke IDR
+  String formatCurrency(double price) {
+    final currencyFormatter = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 0,
+    );
+    return currencyFormatter.format(price);
+  }
 
   PharmacyPage({super.key});
 
@@ -280,7 +291,7 @@ class PharmacyPage extends StatelessWidget {
   }
 }
 
-// // Widget untuk kartu produk
+// Widget untuk kartu produk
 class ProductCard extends StatelessWidget {
   final String name;
   final String description;
@@ -299,12 +310,21 @@ class ProductCard extends StatelessWidget {
     required this.onTap,
   });
 
+  String formatCurrency(double price) {
+    final currencyFormatter = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 0,
+    );
+    return currencyFormatter.format(price);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 130, // 
+        width: 130,
         margin: EdgeInsets.only(right: 16),
         child: Card(
           elevation: 2,
@@ -348,7 +368,7 @@ class ProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Rp.${price.toStringAsFixed(0)}',
+                          formatCurrency(price),
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -386,6 +406,15 @@ class ProductDetailDialog extends StatelessWidget {
     required this.price,
     required this.image,
   });
+
+  String formatCurrency(double price) {
+    final currencyFormatter = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 0,
+    );
+    return currencyFormatter.format(price);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -427,7 +456,7 @@ class ProductDetailDialog extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              'Rp.$price',
+              formatCurrency(price),
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
